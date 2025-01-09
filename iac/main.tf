@@ -4,18 +4,18 @@ resource "azurerm_resource_group" "mRG" {
 }
 
 resource "azurerm_app_service_plan" "myplan" {
-  name = "my_app_service_plan"
+  name = "projectappplan"
   location = azurerm_resource_group.mRG.location
   resource_group_name = azurerm_resource_group.mRG.name
   sku {
-    tier = "Standard"
-    size = "S1"
+    tier = "Basic"
+    size = "B1"
   }
 }
 
 resource "azurerm_app_service" "my_app_service_plan" {
   app_service_plan_id = azurerm_app_service_plan.myplan.id
-  name = "myApp"
+  name = "projectcobra"
   location = azurerm_resource_group.mRG.location
   resource_group_name = azurerm_resource_group.mRG.name
 
