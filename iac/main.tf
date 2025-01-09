@@ -26,7 +26,7 @@ resource "azurerm_app_service" "my_app_service_plan" {
 
 resource "local_file" "index_html" {
   content  = file("index.html")
-  filename = "/index.html"
+  filename = "${path.module}/index.html"
 }
 
 resource "null_resource" "upload_index_html" {
