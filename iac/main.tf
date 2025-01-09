@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "mRG" {
     name = "projectrg"
-    location = "East US"
+    location = "Canada Central"
 }
 
 resource "azurerm_app_service_plan" "myplan" {
@@ -8,8 +8,8 @@ resource "azurerm_app_service_plan" "myplan" {
   location = azurerm_resource_group.mRG.location
   resource_group_name = azurerm_resource_group.mRG.name
   sku {
-    tier = "Basic"
-    size = "B1"
+    tier = "Free"
+    size = "F1"
   }
 }
 
