@@ -23,3 +23,5 @@ resource "azurerm_app_service" "my_app_service_plan" {
     scm_type = "GitHub"
   }
 }
+
+
