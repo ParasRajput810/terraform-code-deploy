@@ -27,48 +27,24 @@ resource "azurerm_app_service" "my_app_service_plan" {
 resource "null_resource" "upload_index_html" {
   provisioner "local-exec" {
     command = <<EOT
-      # Log the current working directory
       echo "Current working directory: $(pwd)"
       
       # List files in the current directory to see what's available
       echo "Files in the current directory:"
       ls -la
 
-      # Define the absolute path for the index.html file in the project root
-      PROJECT_ROOT=${path.module}/../
-
-      # Log the absolute path of the index.html file
-      echo "Absolute path to index.html: ${PROJECT_ROOT}index.html"
-
-      # Check if the index.html file exists in the given path
-      if [ -f ${PROJECT_ROOT}index.html ]; then
-        echo "index.html file found."
-      else
-        echo "index.html file not found."
-        exit 1
-      fi
-
-      # Create a zip file containing index.html from the project root
-      zip -r ${PROJECT_ROOT}index.zip ${PROJECT_ROOT}index.html
-
-      # Log if the zip was created successfully
-      if [ -f ${PROJECT_ROOT}index.zip ]; then
-        echo "index.zip file created successfully."
-      else
-        echo "Failed to create index.zip."
-        exit 1
-      fi
+      # Create a zip file containing index.html from the root of the project
+      zip -r ${path.module}/index.zip ${path.module}/../index.html
 
       # Upload the zip file to the Azure App Service
       az webapp deployment source config-zip \
-        --resource-group projectrg \
-        --name projectcobra \
-        --src ${PROJECT_ROOT}index.zip
+        --resource-group ${azurerm_resource_group.mRG.name} \
+        --name ${azurerm_app_service.my_app_service_plan.name} \
+        --src ${path.module}/index.zip
     EOT
     interpreter = ["/bin/bash", "-c"]
   }
 
   depends_on = [azurerm_app_service.my_app_service_plan]
 }
-
 
