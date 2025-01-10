@@ -28,13 +28,13 @@ resource "null_resource" "upload_index_html" {
   provisioner "local-exec" {
     command = <<EOT
       # Create a zip file containing index.html
-      zip -r index.zip ${path.module}/index.html
+      zip -r ${path.module}/index.zip ${path.module}/index.html
 
       # Upload the zip file to the Azure App Service
       az webapp deployment source config-zip \
         --resource-group ${azurerm_resource_group.mRG.name} \
         --name ${azurerm_app_service.my_app_service_plan.name} \
-        --src ./index.zip
+        --src ${path.module}/index.zip
     EOT
     interpreter = ["/bin/bash", "-c"]
   }
