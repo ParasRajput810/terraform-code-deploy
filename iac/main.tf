@@ -27,8 +27,8 @@ resource "azurerm_app_service" "my_app_service_plan" {
 resource "null_resource" "upload_index_html" {
   provisioner "local-exec" {
     command = <<EOT
-      # Create a zip file containing index.html
-      zip -r ${path.module}/index.zip ${path.module}/index.html
+      # Create a zip file containing index.html from the root of the project
+      zip -r ${path.module}/index.zip ${path.module}/../index.html
 
       # Upload the zip file to the Azure App Service
       az webapp deployment source config-zip \
@@ -41,3 +41,4 @@ resource "null_resource" "upload_index_html" {
 
   depends_on = [azurerm_app_service.my_app_service_plan]
 }
+
