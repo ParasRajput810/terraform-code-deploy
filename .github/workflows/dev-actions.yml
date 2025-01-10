@@ -41,10 +41,25 @@ jobs:
 
     - name: Upload HTML to App Service
       run: |
+        # Navigate to the project root directory (if not already there)
+        cd $GITHUB_WORKSPACE
+
+        # Create a zip file containing index.html
+        zip -r index.zip index.html
+
+        # Check if the zip file was created
+        if [ -f index.zip ]; then
+          echo "index.zip created successfully."
+        else
+          echo "Failed to create index.zip."
+          exit 1
+        fi
+
+        # Deploy the zip file to Azure App Service
         az webapp deployment source config-zip \
           --resource-group projectrg \
           --name projectcobra \
-          --src-path ./index.html
+          --src ./index.zip
       env:
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
