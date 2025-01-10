@@ -39,7 +39,7 @@ jobs:
       run: terraform apply -auto-approve
       working-directory: ./iac
 
-     - name: Upload HTML to App Service
+    - name: Upload HTML to App Service
       run: |
         az webapp deployment source config-zip \
           --resource-group projectrg \
