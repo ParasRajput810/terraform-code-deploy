@@ -48,4 +48,3 @@ resource "null_resource" "upload_index_html" {
   depends_on = [azurerm_app_service.my_app_service_plan]
 }
 
-## Deployment55

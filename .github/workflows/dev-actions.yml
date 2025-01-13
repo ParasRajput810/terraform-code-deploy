@@ -58,7 +58,7 @@ jobs:
         # Deploy the zip file to Azure App Service
         az webapp deployment source config-zip \
           --resource-group projectrg \
-          --name projectcobra \
+          --name gitworkflowproj13012025 \
           --src ./index.zip
       env:
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
