@@ -26,7 +26,7 @@ resource "azurerm_app_service" "my_app_service_plan" {
 
 resource "null_resource" "upload_index_html" {
   provisioner "local-exec" {
-    command = <<EOT
+    command =<<EOT
       echo "Current working directory: $(pwd)"
       
       # List files in the current directory to see what's available
@@ -35,7 +35,7 @@ resource "null_resource" "upload_index_html" {
 
       # Create a zip file containing index.html from the root of the project
       zip -r ${path.module}/index.zip ${path.module}/../index.html
-
+ 
       # Upload the zip file to the Azure App Service
       az webapp deployment source config-zip \
         --resource-group ${azurerm_resource_group.mRG.name} \
@@ -48,3 +48,4 @@ resource "null_resource" "upload_index_html" {
   depends_on = [azurerm_app_service.my_app_service_plan]
 }
 
+## Deployment55
